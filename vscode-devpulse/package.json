@@ -1,0 +1,127 @@
+{
+  "name": "devpulse",
+  "displayName": "DevPulse - Developer Toolkit",
+  "description": "A productivity toolkit: bookmarks, snippets, TODO aggregator, git activity, and quick notes — all in one panel.",
+  "version": "1.0.0",
+  "publisher": "devpulse",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other", "Snippets", "Visualization"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "icon": "icon.png",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "devpulse",
+          "title": "DevPulse",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "devpulse": [
+        {
+          "type": "webview",
+          "id": "devpulse.dashboard",
+          "name": "Dashboard"
+        },
+        {
+          "type": "tree",
+          "id": "devpulse.bookmarks",
+          "name": "Bookmarks"
+        },
+        {
+          "type": "tree",
+          "id": "devpulse.todos",
+          "name": "TODOs"
+        },
+        {
+          "type": "tree",
+          "id": "devpulse.snippets",
+          "name": "Snippet Vault"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "devpulse.addBookmark",
+        "title": "DevPulse: Bookmark Current Line"
+      },
+      {
+        "command": "devpulse.removeBookmark",
+        "title": "DevPulse: Remove Bookmark"
+      },
+      {
+        "command": "devpulse.addSnippet",
+        "title": "DevPulse: Save Selection as Snippet"
+      },
+      {
+        "command": "devpulse.insertSnippet",
+        "title": "DevPulse: Insert Snippet"
+      },
+      {
+        "command": "devpulse.openNote",
+        "title": "DevPulse: Open Quick Notes"
+      },
+      {
+        "command": "devpulse.refreshTodos",
+        "title": "DevPulse: Refresh TODOs"
+      },
+      {
+        "command": "devpulse.openDashboard",
+        "title": "DevPulse: Open Dashboard"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "devpulse.addBookmark",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b"
+      },
+      {
+        "command": "devpulse.addSnippet",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s"
+      },
+      {
+        "command": "devpulse.openNote",
+        "key": "ctrl+shift+n",
+        "mac": "cmd+shift+n"
+      }
+    ],
+    "configuration": {
+      "title": "DevPulse",
+      "properties": {
+        "devpulse.todoPatterns": {
+          "type": "array",
+          "default": ["TODO", "FIXME", "HACK", "XXX", "BUG", "NOTE"],
+          "description": "Comment patterns to scan for"
+        },
+        "devpulse.excludePatterns": {
+          "type": "array",
+          "default": ["**/node_modules/**", "**/dist/**", "**/build/**", "**/.git/**"],
+          "description": "Glob patterns to exclude from scanning"
+        },
+        "devpulse.snippetVariableDelimiter": {
+          "type": "string",
+          "default": "${{}}",
+          "description": "Delimiter for snippet variables (e.g., ${{varName}})"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}

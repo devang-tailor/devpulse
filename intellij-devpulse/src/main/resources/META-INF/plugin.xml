@@ -1,0 +1,107 @@
+<idea-plugin>
+  <id>dev.pulse.devpulse</id>
+  <name>DevPulse — Developer Toolkit</name>
+  <version>1.0.0</version>
+  <vendor email="dev@devpulse.dev" url="https://github.com/devang-tailor/devpulse">DevPulse</vendor>
+
+  <description><![CDATA[
+    <h2>⚡ DevPulse — Developer Toolkit</h2>
+    <p>A single tool window that replaces scattered productivity tools:</p>
+    <ul>
+      <li><b>🔖 Smart Bookmarks</b> — Bookmark any line with a label. One-click navigation. Persists per-project.</li>
+      <li><b>📋 TODO Aggregator</b> — Scans your project for TODO, FIXME, HACK, XXX, BUG, NOTE comments. Prioritized display (bugs first). Configurable patterns.</li>
+      <li><b>📦 Snippet Vault</b> — Save code as reusable snippets with <code>${{varName}}</code> variable interpolation. Usage tracking. Double-click to insert.</li>
+      <li><b>📝 Quick Notes</b> — Per-project scratchpad stored as <code>.devpulse-notes.md</code>. Context survives between sessions.</li>
+      <li><b>⚡ Dashboard</b> — At-a-glance stats, todo breakdown by type, and quick action buttons.</li>
+    </ul>
+    <h3>Keyboard Shortcuts</h3>
+    <ul>
+      <li><code>Ctrl+Shift+B</code> — Bookmark current line</li>
+      <li><code>Ctrl+Shift+S</code> — Save selection as snippet</li>
+      <li><code>Ctrl+Shift+N</code> — Open quick notes</li>
+    </ul>
+    <h3>Works With</h3>
+    <p>IntelliJ IDEA, Android Studio, WebStorm, PyCharm, GoLand, Rider, CLion, PhpStorm, RubyMine — all JetBrains IDEs 2023.3+</p>
+  ]]></description>
+
+  <change-notes><![CDATA[
+    <b>1.0.0</b> — Initial release: bookmarks, TODOs, snippets, quick notes, dashboard.
+  ]]></change-notes>
+
+  <!-- IntelliJ 2023.3+ / Android Studio Hedgehog+ -->
+  <idea-version since-build="233" until-build="243.*"/>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Tool Window -->
+    <toolWindow id="DevPulse"
+                anchor="bottom"
+                factoryClass="devpulse.ui.DevPulseToolWindowFactory"
+                icon="/icons/devpulse.svg"/>
+
+    <!-- Settings -->
+    <applicationConfigurable parentId="tools"
+                             instance="devpulse.settings.DevPulseSettingsConfigurable"
+                             id="dev.pulse.devpulse.settings"
+                             displayName="DevPulse"/>
+
+    <applicationService serviceImplementation="devpulse.settings.DevPulseSettingsState"/>
+    <applicationService serviceImplementation="devpulse.services.SnippetService"/>
+
+    <!-- Project-level services -->
+    <projectService serviceImplementation="devpulse.services.BookmarkService"/>
+    <projectService serviceImplementation="devpulse.services.TodoScannerService"/>
+
+    <!-- Startup Activity -->
+    <postStartupActivity implementation="devpulse.services.DevPulseStartupActivity"/>
+  </extensions>
+
+  <actions>
+    <!-- Main menu group -->
+    <group id="DevPulse.Menu" text="DevPulse" popup="true">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+
+      <action id="DevPulse.AddBookmark"
+              class="devpulse.actions.AddBookmarkAction"
+              text="Bookmark Current Line"
+              description="Add a bookmark to the current line"
+              icon="/icons/bookmark.svg">
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift B"/>
+      </action>
+
+      <action id="DevPulse.SaveSnippet"
+              class="devpulse.actions.SaveSnippetAction"
+              text="Save Selection as Snippet"
+              description="Save the selected code as a reusable snippet"
+              icon="/icons/snippet.svg">
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift S"/>
+      </action>
+
+      <action id="DevPulse.OpenNotes"
+              class="devpulse.actions.OpenNotesAction"
+              text="Open Quick Notes"
+              description="Open the per-project quick notes file"
+              icon="/icons/notes.svg">
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift N"/>
+      </action>
+
+      <action id="DevPulse.ScanTodos"
+              class="devpulse.actions.ScanTodosAction"
+              text="Scan for TODOs"
+              description="Scan the project for TODO/FIXME/HACK comments"/>
+
+      <separator/>
+
+      <action id="DevPulse.OpenDashboard"
+              class="devpulse.actions.OpenDashboardAction"
+              text="Open Dashboard"
+              description="Open the DevPulse dashboard panel"/>
+    </group>
+
+    <!-- Editor context menu -->
+    <group id="DevPulse.EditorPopupMenu" popup="false">
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+      <reference ref="DevPulse.AddBookmark"/>
+      <reference ref="DevPulse.SaveSnippet"/>
+    </group>
+  </actions>
+</idea-plugin>
