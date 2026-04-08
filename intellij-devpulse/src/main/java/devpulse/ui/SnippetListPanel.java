@@ -110,10 +110,11 @@ public class SnippetListPanel extends JPanel {
         }
 
         String finalBody = SnippetService.getInstance().expandSnippet(snippet, values);
+        final int insertOffset = editor.getCaretModel().getOffset();
+        final Editor finalEditor = editor;
 
         WriteCommandAction.runWriteCommandAction(project, "Insert DevPulse Snippet", null, () -> {
-            int offset = editor.getCaretModel().getOffset();
-            editor.getDocument().insertString(offset, finalBody);
+            finalEditor.getDocument().insertString(insertOffset, finalBody);
         });
 
         refresh(); // update usage count display

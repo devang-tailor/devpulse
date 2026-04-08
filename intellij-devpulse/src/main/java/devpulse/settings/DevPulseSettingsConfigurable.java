@@ -6,6 +6,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class DevPulseSettingsConfigurable implements Configurable {
 
@@ -55,8 +57,8 @@ public class DevPulseSettingsConfigurable implements Configurable {
     @Override
     public void apply() {
         DevPulseSettingsState settings = DevPulseSettingsState.getInstance();
-        settings.todoPatterns = List.of(todoPatternsField.getText().split("\\s*,\\s*"));
-        settings.excludePatterns = List.of(excludePatternsField.getText().split("\\s*,\\s*"));
+        settings.todoPatterns = Arrays.asList(todoPatternsField.getText().split("\\s*,\\s*"));
+        settings.excludePatterns = Arrays.asList(excludePatternsField.getText().split("\\s*,\\s*"));
     }
 
     @Override

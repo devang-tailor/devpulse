@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
@@ -35,9 +36,10 @@ public class AddBookmarkAction extends AnAction {
         if (virtualFile == null) return;
 
         String filePath = virtualFile.getPath();
+        int lineStartOffset = editor.getDocument().getLineStartOffset(line);
+        int lineEndOffset = editor.getDocument().getLineEndOffset(line);
         String contextLine = editor.getDocument().getText(
-            new com.intellij.openapi.editor.LogicalPosition(line, 0),
-            new com.intellij.openapi.editor.LogicalPosition(line, Integer.MAX_VALUE)
+            new TextRange(lineStartOffset, lineEndOffset)
         );
 
         String label = Messages.showInputDialog(
