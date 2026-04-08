@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.gradle/
+
+# Build output
+plugins/vscode-devpulse/out/
+plugins/vscode-devpulse/*.vsix
+plugins/intellij-devpulse/build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,46 @@
+name: 🐛 Bug Report
+description: Report a bug in DevPulse
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - VS Code
+        - IntelliJ IDEA
+        - Android Studio
+        - WebStorm
+        - Other JetBrains IDE
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: DevPulse Version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this?
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Screenshots
+      description: Any error messages or screenshots?

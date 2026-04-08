@@ -1,0 +1,30 @@
+name: 💡 Feature Request
+description: Suggest a new feature for DevPulse
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - VS Code
+        - IntelliJ / Android Studio
+        - Both
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What feature would you like? Be specific.
+    validations:
+      required: true
+
+  - type: textarea
+    id: usecase
+    attributes:
+      label: Use Case
+      description: Why do you need this? What problem does it solve?
+    validations:
+      required: true
